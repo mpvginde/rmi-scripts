@@ -51,11 +51,16 @@ casetype = arg_list[5]
 
 threshold = 0.1
 ncascade = 8
-dir_cascade = os.path.join(f'/home/michielv/pysteps/hackaton/nwp/{casetype}',startdate.strftime('%Y%m%d'))
+
+dir_base = "/home/michielv/pysteps/hackaton/" # change me
+dir_cascade = os.path.join(dir_base,f'nwp/{casetype}',startdate.strftime('%Y%m%d'))
 dir_motion = dir_cascade
-dir_skill = '/home/michielv/pysteps/hackaton/skill'
-dir_gif = '/home/michielv/pysteps/hackaton/gifs'
-dir_nwc = '/home/michielv/pysteps/hackaton/nwc'
+dir_skill = os.path.join(dir_base,'skill')
+dir_gif = os.path.join(dir_base,'gifs')
+dir_nwc = os.path.join(dir_base,'nwc')
+if not os.path.exists(dir_nwc):
+    os.makedirs(dir_nwc)
+
 print("Started nowcast with:")
 print(r' Startdate: %s' % startdate.strftime("%Y-%m-%d %H:%M"))
 print(r' Forecast length: %i timesteps' % fc_length)
@@ -73,7 +78,7 @@ data_src_radar = "rmi"
 data_src_nwp = "rmi_nwp"
 
 # 3. Load the radar analyses 
-root_path = '/home/michielv/pysteps/hackaton/radar' #pysteps.rcparams.data_sources[data_src_radar]["root_path"]
+root_path = os.path.join(dir_base,'radar') #pysteps.rcparams.data_sources[data_src_radar]["root_path"]
 path_fmt = f'{casetype}/%Y%m%d' #pysteps.rcparams.data_sources[data_src_radar]["path_fmt"]
 fn_pattern = '%Y%m%d%H%M%S.rad.bhbjbwdnfa.comp.rate.qpe2' #pysteps.rcparams.data_sources[data_src_radar]["fn_pattern"]
 fn_ext = 'hdf' #pysteps.rcparams.data_sources[data_src_radar]["fn_ext"]
